@@ -14,15 +14,22 @@ import AdminHome from "./pages/Admin/AdminHome";
 import ApproveRestaurants from "./pages/Admin/ApproveRestaurant";
 import AllRestaurants from "../src/pages/Admin/AllRestaurants"
 import ViewRestaurants from "../src/pages/Customer/ViewRestaurant"
+import Hot from "../src/pages/Hot"
+import Cart from "./components/CartDetails"
+import Success from "./components/Sucess"
+import Cancel from "./components/Cancel"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Items from "./components/items"
 
 function App() {
   return (
-    <div className="App">
+    <div class="App  col-12 ">
       <BrowserRouter>
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/hot" element={<Hot />} />
           <Route exact path="/resthome" element={<RestaurantHome />} />
           <Route exact path="/rest/addfood" element={<Addfood />} />
           <Route exact path="/rest/deletefood" element={<Deletefood />} />
@@ -34,6 +41,10 @@ function App() {
           <Route exact path="/admin/pending" element={<ApproveRestaurants />} />
           <Route exact path="/admin/viewres" element={<AllRestaurants />} />
           <Route exact path="viewres" element={<ViewRestaurants />} />
+          <Route  path='/cart' element={<Cart />}/>
+      <Route  path='/sucess' element={<Success />}/>
+      <Route  path='/cancel' element={<Cancel />}/>
+      <Route  path='/items' element={<Items />}/>
         </Routes>
       </BrowserRouter>
     </div>

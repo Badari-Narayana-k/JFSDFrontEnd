@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import Alert from "../design/Alert";
 import axios from "axios";
 const Signup = () => {
+  const[id,setId]=useState("");
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [showAlert, setshowAlert] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log(name);
-      await axios.post("http://localhost:2020/res/signup", { name });
+      await axios.post("http://localhost:2020/res/signup", {id,name,password});
       setshowAlert(true);
     } catch (error) {}
   };
@@ -28,19 +30,54 @@ const Signup = () => {
                 </h3>
                 <label
                   class="block text-white text-sm font-bold mb-2"
-                  for="username"
+                  for="id"
                 >
-                  Username
+                  id
                 </label>
                 <input
                   class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="username"
+                  id="id"
+                  type="id"
+                  placeholder="Id"
+                  name="id"
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
+                />
+                <br/>
+                <br/>
+                <label
+                  class="block text-white text-sm font-bold mb-2"
+                  for="name"
+                >
+                  name
+                </label>
+                <input
+                  class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
                   type="text"
-                  placeholder="Username"
-                  name="username"
+                  placeholder="name"
+                  name="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
+                <br/>
+                <br/>
+                <label
+                  class="block text-white text-sm font-bold mb-2"
+                  for="name"
+                >
+                  Password
+                </label>
+                <input
+                  class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="password"
+                  type="password"
+                  placeholder="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                      
                 <button
                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded focus:outline-none focus:shadow-outline"
                   type="button"

@@ -1,124 +1,114 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './login.css';
+import { Button } from '@mui/material';
 
-const Login = ({ handleLogin }) => {
-  const handleChange = () => {
-    handleLogin();
+const Login = () => {
+  const [isLoginForm, setIsLoginForm] = useState(true);
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:2020/res/login', {
+        username: user,
+        password: password,
+      });
+  
+      if (response.data === true) {
+        // Assuming `navigate` is from `useNavigate` hook in React Router
+        navigate('/resthome');
+      } else {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  const handleLogInClick = () => {
+    setIsLoginForm(true);
+  };
+
+  const handleSignUpClick = () => {
+    setIsLoginForm(false);
+  };
+
   return (
-    <div className="bg-[#1c3155]">
-      <div className="bg-[#1c3155] h-[90vh] flex items-center justify-evenly mx-4">
-        <div class="w-full max-w-xs bg-[#1c3155]">
-          <form class="px-8 pt-6 pb-8 mb-4 bg-[#1c3155] rounded-lg shadow-2xl">
-            <div class="mb-4">
-              <h3 className="text-white font-serif font-bold mb-4">
-                Customer Login
-              </h3>
-              <label
-                class="block text-white text-sm font-bold mb-2"
-                for="username"
-              >
-                Username
-              </label>
-              <input
-                class="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-              />
-            </div>
-            <div class="mb-6">
-              <label
-                class="block text-white text-sm font-bold mb-2"
-                for="password"
-              >
-                Password
-              </label>
-              <input
-                class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-white-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="******************"
-              />
-              <p class="text-red-500 text-xs italic">
-                Please choose a password.
-              </p>
-            </div>
-            <div
-              class="flex items-center justify-between"
-              // onClick={handleChange}
-            >
-              <Link to ="/cus/home"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-              >
-                Sign In
-              </Link>
-              <a
-                class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                href="#"
-              >
-                Forgot Password?
-              </a>
-            </div>
-          </form>
+    <lbody>
+    <div className="lcontainer">
+      <div className="box"></div>
+      <div className="lcontainer-forms">
+        <div className="lcontainer-info">
+          
+          <div className="info-item">
+            
+          </div>
         </div>
-        <div class="w-full max-w-xs bg-[#1c3155]">
-          <form class="px-8 pt-6 pb-8 mb-4 bg-[#1c3155] rounded-lg shadow-2xl">
-            <div class="mb-4">
-              <h3 className="text-white font-serif font-bold mb-4">
-                Restaurant Login
-              </h3>
-              <label
-                class="block text-white text-sm font-bold mb-2"
-                for="username"
-              >
-                Username
-              </label>
-              <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-              />
-            </div>
-            <div class="mb-6">
-              <label
-                class="block text-white text-sm font-bold mb-2"
-                for="password"
-              >
-                Password
-              </label>
-              <input
-                class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-white-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="******************"
-              />
-              <p class="text-red-500 text-xs italic">
-                Please choose a password.
-              </p>
-            </div>
-            <div class="flex items-center justify-between">
-              <Link
-                to="/resthome"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-                //  onClick={handleChange}
-              >
-                Sign In
-              </Link>
-              <a
-                class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                href="#"
-              >
-                Forgot Password?
+        <div className="lcontainer-form">
+          {isLoginForm ? (
+            
+            <div className="form-item log-in">
+              <h1 style={{fontFamily:"sans-serif", fontWeight:"bold"}}>CUSTOMER LOGIN</h1>
+              <div className="table">
+                <div className="table-cell">
+                  <input name="Username" placeholder="Username" type="text" />
+                  <input name="Password" placeholder="Password" type="password" />
+                  <br/><br/>
+                  <a class="border-yellow-300">
+                <Link
+                  to="/viewres"
+                  class="hover:shadow-xl transition-all p-2 px-4 bg-white rounded w-[fit-content] text-sm md:text-base font-bold border-yellow-300"
+                >
+                  Login
+                </Link>
               </a>
+              <br/><br/>
+                  <p>From Restaurant?</p>
+                <div className="lbtn" onClick={handleSignUpClick}>
+                  Restaurant Login
+                </div>
+                </div>
+                <br/>
+                
+              </div>
             </div>
-          </form>
+          ) : (
+            <div className="form-item sign-up">
+              <h1 style={{fontFamily:"sans-serif", fontWeight:"bold"}}>RESTAURANT LOGIN</h1>
+              <div className="table">
+                <div className="table-cell" style={{margin:"2px"}}>
+                  
+                  <input name="user" placeholder="Username" type="text" value={user}
+                  onChange={(e) => setUser(e.target.value)} />
+                  <input name="password" placeholder="Password" type="password"value={password}
+                  onChange={(e) => setPassword(e.target.value)} />
+                  <br/><br/>
+                  <a class="border-yellow-300">
+                <Button
+                  onClick={handleSubmit}
+                  class="hover:shadow-xl transition-all p-2 px-4 bg-white rounded w-[fit-content] text-sm md:text-base font-bold border-yellow-300"
+                >
+                  Login
+                </Button>
+              </a>
+                  <br/><br/>
+                  <p>Are You a Customer?</p>
+                <div className="lbtn" onClick={handleLogInClick}>
+                  Customer Login
+                </div>
+                </div>
+                <br/>
+                
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
+    </lbody>
   );
 };
 
